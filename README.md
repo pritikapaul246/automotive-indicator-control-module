@@ -26,7 +26,7 @@ This project implements an automotive-style Indicator Control Module using an ES
 ## Hardware Setup
 
 Below is the experimental setup of the Indicator Control Module using ESP8266 NodeMCU, push-button module, and indicator LEDs.
-<img width="100" height="100" alt="hardware_setup" src="https://github.com/user-attachments/assets/4e06a206-3d0e-44ed-b7cf-3d26a27e78f5" />
+<img width="300" height="300" alt="hardware_setup" src="https://github.com/user-attachments/assets/4e06a206-3d0e-44ed-b7cf-3d26a27e78f5" />
 
 
 ---
