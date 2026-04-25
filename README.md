@@ -1,5 +1,3 @@
-<img width="960" height="1280" alt="hardware_setup" src="https://github.com/user-attachments/assets/50b3ff89-edfc-46c2-9099-ba4ff20a23fc" />
-# automotive-indicator-control-module
 # Automotive Indicator Control Module (Embedded ECU Simulation)
 
 This project implements an automotive-style Indicator Control Module using an ESP8266 microcontroller with a cooperative time-triggered scheduler architecture. The system simulates real vehicle turn indicator and hazard light control logic similar to a Body Control Module (BCM).
@@ -28,7 +26,7 @@ This project implements an automotive-style Indicator Control Module using an ES
 ## Hardware Setup
 
 Below is the experimental setup of the Indicator Control Module using ESP8266 NodeMCU, push-button module, and indicator LEDs.
-<img width="960" height="1280" alt="hardware_setup" src="https://github.com/user-attachments/assets/4e06a206-3d0e-44ed-b7cf-3d26a27e78f5" />
+<img width="960/2" height="1280/2" alt="hardware_setup" src="https://github.com/user-attachments/assets/4e06a206-3d0e-44ed-b7cf-3d26a27e78f5" />
 
 
 ---
