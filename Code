@@ -1,0 +1,129 @@
+#define GREEN_BUTTON  D1
+#define RED_BUTTON    D2
+#define GREEN_LED D5
+#define RED_LED   D6
+
+unsigned long last100msTick = 0;
+unsigned long last300msTick = 0;
+
+int greencounter = 0;
+int redcounter = 0;
+int bothcounter = 0;
+
+bool greenindicator = false;
+bool redindicator = false;
+bool hazard = false;
+bool ledBlinkState = false;
+
+void setup()
+{
+  Serial.begin(115200);
+
+  pinMode(GREEN_BUTTON, INPUT_PULLUP);
+  pinMode(RED_BUTTON, INPUT_PULLUP);
+  pinMode(GREEN_LED, OUTPUT);
+  pinMode(RED_LED, OUTPUT);
+  Serial.println("[SYSTEM] Indicator ECU Started");
+}
+
+void loop()
+{
+  unsigned long currentTime = millis();
+  // 100 ms TASK
+  if(currentTime - last100msTick >= 100)
+  {
+    last100msTick = currentTime;
+
+    bool greenpressed = (digitalRead(GREEN_BUTTON) == LOW);
+    bool redpressed   = (digitalRead(RED_BUTTON) == LOW);
+
+    // Hazard activation
+    if(greenpressed && redpressed && !hazard)
+    {
+      bothcounter++;
+      if(bothcounter >= 10)
+      {
+        hazard = true;
+        greenindicator = false;
+        redindicator = false;
+        Serial.println("[EVENT] HAZARD MODE ON");
+        bothcounter = 0;
+      }
+    }
+    else
+    {
+      bothcounter = 0;
+    }
+
+    // Hazard exit
+    if(hazard && (greenpressed ^ redpressed))
+    {
+      if(greenpressed) greencounter++;
+      if(redpressed) redcounter++;
+      if(greencounter >= 10 || redcounter >= 10)
+      {
+        hazard = false;
+        Serial.println("[EVENT] HAZARD MODE OFF");
+        greencounter = 0;
+        redcounter = 0;
+      }
+    }
+    // Green indicator logic
+    if(!hazard && greenpressed && !redpressed)
+    {
+      greencounter++;
+      if(greencounter >= 10)
+      {
+        greenindicator = !greenindicator;
+        redindicator = false;
+        Serial.println(greenindicator ?
+                       "[EVENT] LEFT INDICATOR ON" :
+                       "[EVENT] LEFT INDICATOR OFF");
+        greencounter = 0;
+      }
+    }
+    else if(!greenpressed)
+    {
+      greencounter = 0;
+    }
+
+    // Red indicator logic
+    if(!hazard && redpressed && !greenpressed)
+    {
+      redcounter++;
+      if(redcounter >= 10)
+      {
+        redindicator = !redindicator;
+        greenindicator = false;
+        Serial.println(redindicator ?
+                       "[EVENT] RIGHT INDICATOR ON" :
+                       "[EVENT] RIGHT INDICATOR OFF");
+        redcounter = 0;
+      }
+    }
+    else if(!redpressed)
+    {
+      redcounter = 0;
+    }
+  }
+
+  // 300 ms TASK
+  if(currentTime - last300msTick >= 300)
+  {
+    last300msTick = currentTime;
+    ledBlinkState = !ledBlinkState;
+    if(hazard)
+    {
+      digitalWrite(GREEN_LED, ledBlinkState);
+      digitalWrite(RED_LED, ledBlinkState);
+      Serial.println("[EVENT] HAZARD LED TOGGLE");
+    }
+    else
+    {
+      digitalWrite(GREEN_LED,
+                   greenindicator ? ledBlinkState : LOW);
+      digitalWrite(RED_LED,
+                   redindicator ? ledBlinkState : LOW);
+    }
+  }
+}
