@@ -1,1 +1,5 @@
+## Hardware Setup
 
+Prototype implementation of the scheduler-based Indicator Control Module using ESP8266 NodeMCU with push-button input module and GPIO-driven LED indicator outputs.
+
+![Hardware Setup](images/hardware_setup.jpg)
