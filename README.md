@@ -45,8 +45,8 @@ Two periodic software tasks are implemented:
 
 | Task | Period | Function |
 |------|--------|----------|
-| Task_100ms | Button sampling and state transitions |
-| Task_300ms | LED blink signal generation |
+| Task_100ms | 100 ms | Button sampling and state-machine transitions |
+| Task_300ms | 300 ms | Indicator LED blinking control |
 
 This ensures deterministic execution without blocking delays.
 
