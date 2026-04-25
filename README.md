@@ -24,6 +24,12 @@ This project implements an automotive-style Indicator Control Module using an ES
 | 220Ω resistors | 2 |
 | Breadboard | 1 |
 
+## Hardware Setup
+
+Below is the experimental setup of the Indicator Control Module using ESP8266 NodeMCU, push-button module, and indicator LEDs.
+
+![Hardware Setup](images/hardware_setup.jpg)
+
 ---
 
 ## Pin Configuration
